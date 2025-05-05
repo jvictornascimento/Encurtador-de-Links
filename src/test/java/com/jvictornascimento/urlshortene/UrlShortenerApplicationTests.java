@@ -1,4 +1,4 @@
-package com.jvictornascimento.urlshortener;
+package com.jvictornascimento.urlshortene;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

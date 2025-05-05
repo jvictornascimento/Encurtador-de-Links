@@ -1,4 +1,4 @@
-package com.jvictornascimento.urlshortener;
+package com.jvictornascimento.urlshortene;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
