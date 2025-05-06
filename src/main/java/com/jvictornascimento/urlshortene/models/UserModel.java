@@ -33,7 +33,7 @@ public class UserModel implements UserDetails {
 
     private LocalDateTime lastLogin;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ShortUrl> listURL;
 
     public UserModel() {
