@@ -4,11 +4,9 @@ import com.jvictornascimento.urlshortene.dtos.ResponseDeleteShortUrlDTO;
 import com.jvictornascimento.urlshortene.dtos.ResponseGetShortUrlByUser;
 import com.jvictornascimento.urlshortene.dtos.ResponseShortUrlDTO;
 import com.jvictornascimento.urlshortene.dtos.ShortUrlDTO;
-import com.jvictornascimento.urlshortene.models.ShortUrl;
 import com.jvictornascimento.urlshortene.services.ShortUrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

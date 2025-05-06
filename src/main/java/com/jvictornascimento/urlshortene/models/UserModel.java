@@ -1,24 +1,33 @@
 package com.jvictornascimento.urlshortene.models;
 
+import com.jvictornascimento.urlshortene.models.enums.UserRoles;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "TB_USER")
 
-public class UserModel {
+public class UserModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
     private String name;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private UserRoles role;
 
     private LocalDateTime creationDate;
 
@@ -30,11 +39,12 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(Long userId, String name, String email, String password, LocalDateTime creationDate, LocalDateTime lastLogin) {
+    public UserModel(Long userId, String name, String email, String password, UserRoles role, LocalDateTime creationDate, LocalDateTime lastLogin) {
         this.userId = userId;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.creationDate = creationDate;
         this.lastLogin = lastLogin;
     }
@@ -63,12 +73,16 @@ public class UserModel {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRoles getRole() {
+        return role;
+    }
+
+    public void setRole(UserRoles role) {
+        this.role = role;
     }
 
     public LocalDateTime getCreationDate() {
@@ -95,7 +109,40 @@ public class UserModel {
         this.listURL = listURL;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == UserRoles.ADMIN)return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
+    }
 
     @Override
     public boolean equals(Object o) {

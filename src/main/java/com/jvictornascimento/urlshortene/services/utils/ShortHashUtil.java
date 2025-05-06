@@ -30,7 +30,7 @@ public class ShortHashUtil {
             return base62hash.reverse().substring(0, Math.min(HASH_SIZE, base62hash.length()));
 
         } catch (NoSuchAlgorithmException e){
-            throw new RuntimeException("Error generating shrt hash!");
+            throw new RuntimeException("Error generating short hash!");
         }
     }
 }
